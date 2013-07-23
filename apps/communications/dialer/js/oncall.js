@@ -33,20 +33,20 @@ var CallScreen = {
   lockedContactPhoto: document.getElementById('locked-contact-photo'),
 
   init: function cs_init() {
-    this.muteButton.addEventListener('click', this.toggleMute.bind(this));
-    this.keypadButton.addEventListener('click', this.showKeypad.bind(this));
-    this.speakerButton.addEventListener('click',
+    this.muteButton.addEventListener('mouseup', this.toggleMute.bind(this));
+    this.keypadButton.addEventListener('mouseup', this.showKeypad.bind(this));
+    this.speakerButton.addEventListener('mouseup',
                                     this.toggleSpeaker.bind(this));
-    this.answerButton.addEventListener('click',
+    this.answerButton.addEventListener('mouseup',
                                     OnCallHandler.answer.bind(OnCallHandler));
-    this.rejectButton.addEventListener('click',
+    this.rejectButton.addEventListener('mouseup',
                                     OnCallHandler.end);
 
-    this.incomingAnswer.addEventListener('click',
+    this.incomingAnswer.addEventListener('mouseup',
                               OnCallHandler.holdAndAnswer);
-    this.incomingEnd.addEventListener('click',
+    this.incomingEnd.addEventListener('mouseup',
                               OnCallHandler.endAndAnswer);
-    this.incomingIgnore.addEventListener('click',
+    this.incomingIgnore.addEventListener('mouseup',
                                     OnCallHandler.ignore);
 
     this.calls.addEventListener('click',
@@ -664,7 +664,10 @@ var OnCallHandler = (function onCallHandler() {
     }
 
     if (handledCalls.length < 2) {
-      holdOrResumeSingleCall();
+      // Putting a call on Hold when there are no other
+      // calls in progress has been disabled until a less
+      // accidental user-interface is implemented.
+      // See bug 894232 and bug 882056 for more background.
       return;
     }
 
